@@ -1,6 +1,6 @@
 
 
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
 
 	"use strict";
 
@@ -10,37 +10,37 @@ jQuery(document).ready(function($) {
 		once: true
 	});
 
-	var lozadFunc = function() {
+	var lozadFunc = function () {
 		const el = document.querySelectorAll('img');
 		const observer = lozad(el);
-		observer.observe();	
+		observer.observe();
 	}
 	lozadFunc();
 
-	var siteMenuClone = function() {
+	var siteMenuClone = function () {
 
-		$('.js-clone-nav').each(function() {
+		$('.js-clone-nav').each(function () {
 			var $this = $(this);
 			$this.clone().attr('class', 'site-nav-wrap').appendTo('.site-mobile-menu-body');
 		});
 
 
-		setTimeout(function() {
+		setTimeout(function () {
 
 			var counter = 0;
-			$('.site-mobile-menu .has-children').each(function(){
+			$('.site-mobile-menu .has-children').each(function () {
 				var $this = $(this);
 
 				$this.prepend('<span class="arrow-collapse collapsed">');
 
 				$this.find('.arrow-collapse').attr({
-					'data-toggle' : 'collapse',
-					'data-target' : '#collapseItem' + counter,
+					'data-toggle': 'collapse',
+					'data-target': '#collapseItem' + counter,
 				});
 
 				$this.find('> ul').attr({
-					'class' : 'collapse',
-					'id' : 'collapseItem' + counter,
+					'class': 'collapse',
+					'id': 'collapseItem' + counter,
 				});
 
 				counter++;
@@ -49,64 +49,64 @@ jQuery(document).ready(function($) {
 
 		}, 1000);
 
-		$('body').on('click', '.arrow-collapse', function(e) {
+		$('body').on('click', '.arrow-collapse', function (e) {
 			var $this = $(this);
-			if ( $this.closest('li').find('.collapse').hasClass('show') ) {
+			if ($this.closest('li').find('.collapse').hasClass('show')) {
 				$this.removeClass('active');
 			} else {
 				$this.addClass('active');
 			}
-			e.preventDefault();  
+			e.preventDefault();
 
 		});
 
-		$(window).resize(function() {
+		$(window).resize(function () {
 			var $this = $(this),
-			w = $this.width();
+				w = $this.width();
 
-			if ( w > 768 ) {
-				if ( $('body').hasClass('offcanvas-menu') ) {
+			if (w > 768) {
+				if ($('body').hasClass('offcanvas-menu')) {
 					$('body').removeClass('offcanvas-menu');
 				}
 			}
 		})
 
-		$('body').on('click', '.js-menu-toggle', function(e) {
+		$('body').on('click', '.js-menu-toggle', function (e) {
 			var $this = $(this);
 			e.preventDefault();
 
-			if ( $('body').hasClass('offcanvas-menu') ) {
+			if ($('body').hasClass('offcanvas-menu')) {
 				$('body').removeClass('offcanvas-menu');
 				$this.removeClass('active');
 			} else {
 				$('body').addClass('offcanvas-menu');
 				$this.addClass('active');
 			}
-		}) 
+		})
 
 		// click outisde offcanvas
-		$(document).mouseup(function(e) {
+		$(document).mouseup(function (e) {
 			var container = $(".site-mobile-menu");
 			if (!container.is(e.target) && container.has(e.target).length === 0) {
-				if ( $('body').hasClass('offcanvas-menu') ) {
+				if ($('body').hasClass('offcanvas-menu')) {
 					$('body').removeClass('offcanvas-menu');
 				}
 			}
 		});
-	}; 
+	};
 	siteMenuClone();
 
 
-	var sitePlusMinus = function() {
-		$('.js-btn-minus').on('click', function(e){
+	var sitePlusMinus = function () {
+		$('.js-btn-minus').on('click', function (e) {
 			e.preventDefault();
-			if ( $(this).closest('.input-group').find('.form-control').val() != 0  ) {
+			if ($(this).closest('.input-group').find('.form-control').val() != 0) {
 				$(this).closest('.input-group').find('.form-control').val(parseInt($(this).closest('.input-group').find('.form-control').val()) - 1);
 			} else {
 				$(this).closest('.input-group').find('.form-control').val(parseInt(0));
 			}
 		});
-		$('.js-btn-plus').on('click', function(e){
+		$('.js-btn-plus').on('click', function (e) {
 			e.preventDefault();
 			$(this).closest('.input-group').find('.form-control').val(parseInt($(this).closest('.input-group').find('.form-control').val()) + 1);
 		});
@@ -114,25 +114,25 @@ jQuery(document).ready(function($) {
 	// sitePlusMinus();
 
 
-	var siteSliderRange = function() {
-		$( "#slider-range" ).slider({
+	var siteSliderRange = function () {
+		$("#slider-range").slider({
 			range: true,
 			min: 0,
 			max: 500,
-			values: [ 75, 300 ],
-			slide: function( event, ui ) {
-				$( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+			values: [75, 300],
+			slide: function (event, ui) {
+				$("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
 			}
 		});
-		$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-			" - $" + $( "#slider-range" ).slider( "values", 1 ) );
+		$("#amount").val("$" + $("#slider-range").slider("values", 0) +
+			" - $" + $("#slider-range").slider("values", 1));
 	};
 	// siteSliderRange();
 
 
-	
+
 	var siteCarousel = function () {
-		if ( $('.nonloop-block-13').length > 0 ) {
+		if ($('.nonloop-block-13').length > 0) {
 			$('.nonloop-block-13').owlCarousel({
 				center: false,
 				items: 1,
@@ -142,19 +142,19 @@ jQuery(document).ready(function($) {
 				autoplay: true,
 				nav: true,
 				navText: ['<span class="icon-arrow_back">', '<span class="icon-arrow_forward">'],
-				responsive:{
-					600:{
+				responsive: {
+					600: {
 						margin: 0,
 						nav: true,
 						items: 2
 					},
-					1000:{
+					1000: {
 						margin: 0,
 						stagePadding: 0,
 						nav: true,
 						items: 3
 					},
-					1200:{
+					1200: {
 						margin: 0,
 						stagePadding: 0,
 						nav: true,
@@ -179,7 +179,7 @@ jQuery(document).ready(function($) {
 	};
 	siteCarousel();
 
-	var siteStellar = function() {
+	var siteStellar = function () {
 		$(window).stellar({
 			responsive: true,
 			parallaxBackgrounds: true,
@@ -191,9 +191,9 @@ jQuery(document).ready(function($) {
 	};
 	siteStellar();
 
-	var siteCountDown = function() {
+	var siteCountDown = function () {
 
-		$('#date-countdown').countdown('2020/10/10', function(event) {
+		$('#date-countdown').countdown('2020/10/10', function (event) {
 			var $this = $(this).html(event.strftime(''
 				+ '<span class="countdown-block"><span class="label">%w</span> weeks </span>'
 				+ '<span class="countdown-block"><span class="label">%d</span> days </span>'
@@ -205,31 +205,31 @@ jQuery(document).ready(function($) {
 	};
 	siteCountDown();
 
-	var siteDatePicker = function() {
+	var siteDatePicker = function () {
 
-		if ( $('.datepicker').length > 0 ) {
+		if ($('.datepicker').length > 0) {
 			$('.datepicker').datepicker();
 		}
 
 	};
 	siteDatePicker();
 
-	var siteSticky = function() {
-		$(".js-sticky-header").sticky({topSpacing:0});
+	var siteSticky = function () {
+		$(".js-sticky-header").sticky({ topSpacing: 0 });
 	};
 	siteSticky();
 
 	// navigation
-	var OnePageNavigation = function() {
+	var OnePageNavigation = function () {
 		var navToggler = $('.site-menu-toggle');
-		$("body").on("click", ".main-menu li a[href^='#'], .smoothscroll[href^='#'], .site-mobile-menu .site-nav-wrap li a", function(e) {
+		$("body").on("click", ".main-menu li a[href^='#'], .smoothscroll[href^='#'], .site-mobile-menu .site-nav-wrap li a", function (e) {
 			e.preventDefault();
 
 			var hash = this.hash;
 
 			$('html, body').animate({
 				'scrollTop': $(hash).offset().top
-			}, 600, 'easeInOutCirc', function(){
+			}, 600, 'easeInOutCirc', function () {
 				window.location.hash = hash;
 			});
 
@@ -237,11 +237,11 @@ jQuery(document).ready(function($) {
 	};
 	OnePageNavigation();
 
-	var siteScroll = function() {
+	var siteScroll = function () {
 
 
 
-		$(window).scroll(function() {
+		$(window).scroll(function () {
 
 			var st = $(this).scrollTop();
 
@@ -251,7 +251,7 @@ jQuery(document).ready(function($) {
 				$('.js-sticky-header').removeClass('shrink');
 			}
 
-		}) 
+		})
 
 	};
 	siteScroll();
