@@ -1,5 +1,3 @@
-
-
 jQuery(document).ready(function ($) {
 
 	"use strict";
@@ -255,5 +253,35 @@ jQuery(document).ready(function ($) {
 
 	};
 	siteScroll();
+});
 
+
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    // List of sections to check
+    const sections = ["about-section", "services-section", "work-section", "team-section", "contact-section"];
+    
+    // Function to hide the hash from the URL
+    function hideHash() {
+        history.replaceState(null, null, window.location.pathname + window.location.search);
+    }
+
+    // Check if the current URL hash matches any of the sections
+    if (sections.includes(window.location.hash.substring(1))) {
+        hideHash();
+    }
+
+    // Add event listeners to all links
+    const links = document.querySelectorAll(".site-menu.main-menu.js-clone-nav a");
+    links.forEach(link => {
+        link.addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent the default anchor behavior
+            const sectionId = link.getAttribute("href").substring(1);
+            const section = document.getElementById(sectionId);
+            section.scrollIntoView({ behavior: "smooth" }); // Smooth scroll to the section
+            setTimeout(hideHash, 0); // Remove the hash after scrolling
+        });
+    });
 });
