@@ -1,46 +1,34 @@
-// Sticky Plugin v1.0.4 for jQuery
-// =============
-// Author: Anthony Garand
-// Improvements by German M. Bravo (Kronuz) and Ruud Kamphuis (ruudk)
-// Improvements by Leonardo C. Daronco (daronco)
-// Created: 02/14/2011
-// Date: 07/20/2015
-// Website: http://stickyjs.com/
-// Description: Makes an element on the page stick on the screen as you scroll
-//              It will only set the 'top' and 'position' of your element, you
-//              might need to adjust the width in some cases.
-
 (function (factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(['jquery'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        // Node/CommonJS
-        module.exports = factory(require('jquery'));
-    } else {
-        // Browser globals
-        factory(jQuery);
-    }
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(['jquery'], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    // Node/CommonJS
+    module.exports = factory(require('jquery'));
+  } else {
+    // Browser globals
+    factory(jQuery);
+  }
 }(function ($) {
-    var slice = Array.prototype.slice; // save ref to original slice()
-    var splice = Array.prototype.splice; // save ref to original slice()
+  var slice = Array.prototype.slice; // save ref to original slice()
+  var splice = Array.prototype.splice; // save ref to original slice()
 
   var defaults = {
-      topSpacing: 0,
-      bottomSpacing: 0,
-      className: 'is-sticky',
-      wrapperClassName: 'sticky-wrapper',
-      center: false,
-      getWidthFrom: '',
-      widthFromWrapper: true, // works only when .getWidthFrom is empty
-      responsiveWidth: false,
-      zIndex: 'inherit'
-    },
+    topSpacing: 0,
+    bottomSpacing: 0,
+    className: 'is-sticky',
+    wrapperClassName: 'sticky-wrapper',
+    center: false,
+    getWidthFrom: '',
+    widthFromWrapper: true, // works only when .getWidthFrom is empty
+    responsiveWidth: false,
+    zIndex: 'inherit'
+  },
     $window = $(window),
     $document = $(document),
     sticked = [],
     windowHeight = $window.height(),
-    scroller = function() {
+    scroller = function () {
       var scrollTop = $window.scrollTop(),
         documentHeight = $document.height(),
         dwh = documentHeight - windowHeight,
@@ -79,13 +67,13 @@
           if (s.currentTop !== newTop) {
             var newWidth;
             if (s.getWidthFrom) {
-                padding =  s.stickyElement.innerWidth() - s.stickyElement.width();
-                newWidth = $(s.getWidthFrom).width() - padding || null;
+              padding = s.stickyElement.innerWidth() - s.stickyElement.width();
+              newWidth = $(s.getWidthFrom).width() - padding || null;
             } else if (s.widthFromWrapper) {
-                newWidth = s.stickyWrapper.width();
+              newWidth = s.stickyWrapper.width();
             }
             if (newWidth == null) {
-                newWidth = s.stickyElement.width();
+              newWidth = s.stickyElement.width();
             }
             s.stickyElement
               .css('width', newWidth)
@@ -105,7 +93,7 @@
             if (s.currentTop === s.topSpacing && s.currentTop > newTop || s.currentTop === null && newTop < s.topSpacing) {
               // just reached bottom || just started to stick but bottom is already reached
               s.stickyElement.trigger('sticky-bottom-reached', [s]);
-            } else if(s.currentTop !== null && newTop === s.topSpacing && s.currentTop < newTop) {
+            } else if (s.currentTop !== null && newTop === s.topSpacing && s.currentTop < newTop) {
               // sticky is started && sticked at topSpacing && overflowing from top just finished
               s.stickyElement.trigger('sticky-bottom-unreached', [s]);
             }
@@ -117,7 +105,7 @@
           var stickyWrapperContainer = s.stickyWrapper.parent();
           var unstick = (s.stickyElement.offset().top + s.stickyElement.outerHeight() >= stickyWrapperContainer.offset().top + stickyWrapperContainer.outerHeight()) && (s.stickyElement.offset().top <= s.topSpacing);
 
-          if( unstick ) {
+          if (unstick) {
             s.stickyElement
               .css('position', 'absolute')
               .css('top', '')
@@ -133,27 +121,27 @@
         }
       }
     },
-    resizer = function() {
+    resizer = function () {
       windowHeight = $window.height();
 
       for (var i = 0, l = sticked.length; i < l; i++) {
         var s = sticked[i];
         var newWidth = null;
         if (s.getWidthFrom) {
-            if (s.responsiveWidth) {
-                newWidth = $(s.getWidthFrom).width();
-            }
-        } else if(s.widthFromWrapper) {
-            newWidth = s.stickyWrapper.width();
+          if (s.responsiveWidth) {
+            newWidth = $(s.getWidthFrom).width();
+          }
+        } else if (s.widthFromWrapper) {
+          newWidth = s.stickyWrapper.width();
         }
         if (newWidth != null) {
-            s.stickyElement.css('width', newWidth);
+          s.stickyElement.css('width', newWidth);
         }
       }
     },
     methods = {
-      init: function(options) {
-        return this.each(function() {
+      init: function (options) {
+        return this.each(function () {
           var o = $.extend({}, defaults, options);
           var stickyElement = $(this);
 
@@ -163,25 +151,25 @@
             .attr('id', wrapperId)
             .addClass(o.wrapperClassName);
 
-          stickyElement.wrapAll(function() {
+          stickyElement.wrapAll(function () {
             if ($(this).parent("#" + wrapperId).length == 0) {
-                    return wrapper;
+              return wrapper;
             }
-});
+          });
 
           var stickyWrapper = stickyElement.parent();
 
           if (o.center) {
-            stickyWrapper.css({width:stickyElement.outerWidth(),marginLeft:"auto",marginRight:"auto"});
+            stickyWrapper.css({ width: stickyElement.outerWidth(), marginLeft: "auto", marginRight: "auto" });
           }
 
           if (stickyElement.css("float") === "right") {
-            stickyElement.css({"float":"none"}).parent().css({"float":"right"});
+            stickyElement.css({ "float": "none" }).parent().css({ "float": "right" });
           }
 
           o.stickyElement = stickyElement;
           o.stickyWrapper = stickyWrapper;
-          o.currentTop    = null;
+          o.currentTop = null;
 
           sticked.push(o);
 
@@ -190,7 +178,7 @@
         });
       },
 
-      setWrapperHeight: function(stickyElement) {
+      setWrapperHeight: function (stickyElement) {
         var element = $(stickyElement);
         var stickyWrapper = element.parent();
         if (stickyWrapper) {
@@ -198,35 +186,35 @@
         }
       },
 
-      setupChangeListeners: function(stickyElement) {
+      setupChangeListeners: function (stickyElement) {
         if (window.MutationObserver) {
-          var mutationObserver = new window.MutationObserver(function(mutations) {
+          var mutationObserver = new window.MutationObserver(function (mutations) {
             if (mutations[0].addedNodes.length || mutations[0].removedNodes.length) {
               methods.setWrapperHeight(stickyElement);
             }
           });
-          mutationObserver.observe(stickyElement, {subtree: true, childList: true});
+          mutationObserver.observe(stickyElement, { subtree: true, childList: true });
         } else {
           if (window.addEventListener) {
-            stickyElement.addEventListener('DOMNodeInserted', function() {
+            stickyElement.addEventListener('DOMNodeInserted', function () {
               methods.setWrapperHeight(stickyElement);
             }, false);
-            stickyElement.addEventListener('DOMNodeRemoved', function() {
+            stickyElement.addEventListener('DOMNodeRemoved', function () {
               methods.setWrapperHeight(stickyElement);
             }, false);
           } else if (window.attachEvent) {
-            stickyElement.attachEvent('onDOMNodeInserted', function() {
+            stickyElement.attachEvent('onDOMNodeInserted', function () {
               methods.setWrapperHeight(stickyElement);
             });
-            stickyElement.attachEvent('onDOMNodeRemoved', function() {
+            stickyElement.attachEvent('onDOMNodeRemoved', function () {
               methods.setWrapperHeight(stickyElement);
             });
           }
         }
       },
       update: scroller,
-      unstick: function(options) {
-        return this.each(function() {
+      unstick: function (options) {
+        return this.each(function () {
           var that = this;
           var unstickyElement = $(that);
 
@@ -234,11 +222,11 @@
           var i = sticked.length;
           while (i-- > 0) {
             if (sticked[i].stickyElement.get(0) === that) {
-                splice.call(sticked,i,1);
-                removeIdx = i;
+              splice.call(sticked, i, 1);
+              removeIdx = i;
             }
           }
-          if(removeIdx !== -1) {
+          if (removeIdx !== -1) {
             unstickyElement.unwrap();
             unstickyElement
               .css({
@@ -248,7 +236,7 @@
                 'float': '',
                 'z-index': ''
               })
-            ;
+              ;
           }
         });
       }
@@ -263,26 +251,58 @@
     window.attachEvent('onresize', resizer);
   }
 
-  $.fn.sticky = function(method) {
+  $.fn.sticky = function (method) {
     if (methods[method]) {
       return methods[method].apply(this, slice.call(arguments, 1));
-    } else if (typeof method === 'object' || !method ) {
-      return methods.init.apply( this, arguments );
+    } else if (typeof method === 'object' || !method) {
+      return methods.init.apply(this, arguments);
     } else {
       $.error('Method ' + method + ' does not exist on jQuery.sticky');
     }
   };
 
-  $.fn.unstick = function(method) {
+  $.fn.unstick = function (method) {
     if (methods[method]) {
       return methods[method].apply(this, slice.call(arguments, 1));
-    } else if (typeof method === 'object' || !method ) {
-      return methods.unstick.apply( this, arguments );
+    } else if (typeof method === 'object' || !method) {
+      return methods.unstick.apply(this, arguments);
     } else {
       $.error('Method ' + method + ' does not exist on jQuery.sticky');
     }
   };
-  $(function() {
+  $(function () {
     setTimeout(scroller, 0);
   });
+
+  // Function to update the logo based on sticky class
+  function updateLogo() {
+    // Get the logo container
+    const logoContainer = document.getElementById('logo-container');
+
+    // Check if the sticky class is active
+    if (document.body.classList.contains('sticky')) {
+      // If sticky is active, show the image
+      logoContainer.innerHTML = '<img src="images/black-art-studio-logo50X50.png" alt="logo" class="mb-0 site-logo" style="height: 50px; width: 50px;">';
+    } else {
+      // If sticky is not active, show the heading
+      logoContainer.innerHTML = '<h1 class="mb-0 site-logo"> Black Art Studio<span class="text-red">.</span></h1>';
+    }
+  }
+
+  // Call the function to set the initial logo
+  updateLogo();
+
+  // Optionally, you can set up an event listener to update the logo on scroll
+  window.addEventListener('scroll', function () {
+    // Check for the presence of the sticky class based on scroll position
+    if (window.scrollY > 100) { // Change 100 to your desired scroll threshold
+      document.body.classList.add('sticky');
+    } else {
+      document.body.classList.remove('sticky');
+    }
+    // Update the logo based on the current sticky state
+    updateLogo();
+  });
+
+
 }));

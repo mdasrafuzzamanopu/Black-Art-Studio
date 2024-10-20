@@ -211,7 +211,6 @@ h5,
   .site-section {
     padding: 5em 0;
   }
-
   .site-section-1 {
     padding: 5em 0;
   }
@@ -478,6 +477,7 @@ h5,
 }
 
 .site-navbar .site-logo {
+  font-size: 20px;
   position: relative;
   left: 0;
   top: -5px;
@@ -2518,4 +2518,10 @@ h5,
 
 .subcription-form button {
   border-radius: 0px 4px 4px 0px !important;
+}
+
+
+.client-list{
+  width: 250px;
+  height: auto;
 }
