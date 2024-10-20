@@ -197,8 +197,22 @@ h5,
   padding: 2.5em 0;
 }
 
+.site-section-1 {
+  padding: 2.5em 0;
+}
+
+@media (max-width: 450px) {
+  .site-section-1 {
+    display: none;
+  }
+}
+
 @media (min-width: 768px) {
   .site-section {
+    padding: 5em 0;
+  }
+
+  .site-section-1 {
     padding: 5em 0;
   }
 }
@@ -2001,7 +2015,7 @@ h5,
 
 .testimonial blockquote {
   color: #000;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-style: italic;
 }
 
