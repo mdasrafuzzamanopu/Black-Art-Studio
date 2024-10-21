@@ -80,7 +80,7 @@ Background.headparticle = function() {
    function onWindowResize() {
       windowHalfX = site.Width / 2;
       windowHalfY = site.Height / 2;
-      //console.log(windowHalfX);
+      console.log(windowHalfX);
 
       Background.camera.aspect = site.Width / site.Height;
       Background.camera.updateProjectionMatrix();
